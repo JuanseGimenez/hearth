@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get  "login",  to: "sessions#new"
   post "login",  to: "sessions#create"
   delete "logout", to: "sessions#destroy"
-  resources :devices, only: [:index] do
+  resources :devices, only: [ :index ] do
     member { post :command }
   end
   resources :schedules, only: %i[index create update destroy]

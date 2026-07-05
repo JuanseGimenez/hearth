@@ -12,7 +12,7 @@ class ScheduleTest < ActiveSupport::TestCase
     Schedule.create!(device: @device, action: "turn_on", hour: 19, minute: 30, enabled: false)
 
     time = Time.zone.local(2026, 7, 5, 19, 30) # a Sunday (wday 0)
-    assert_equal [match], Schedule.due(time).to_a
+    assert_equal [ match ], Schedule.due(time).to_a
   end
 
   test "days_of_week filters by weekday when present" do
