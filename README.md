@@ -1,24 +1,21 @@
-# README
+# Smart Home
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Local web control for Smart Life / Tuya devices (on/off, brightness, color, schedules).
 
-Things you may want to cover:
+## One-time setup
 
-* Ruby version
+1. Install deps: `bundle install` and `python3 -m pip install -r requirements.txt`.
+2. Extract device keys (needs a free account at iot.tuya.com linked to your Smart Life app):
+   `python3 -m tinytuya wizard`
+   This writes `devices.json` with device ids and local keys.
+3. Import them: `bin/rails tuya:import`
+4. Discover IPs on your LAN: `bin/rails tuya:rescan`
+5. Set the shared password: `export SMART_HOME_PASSWORD=yourpassword`
 
-* System dependencies
+## Run
 
-* Configuration
+- Web + jobs: `bin/rails server` and `bin/jobs` (Solid Queue supervisor for schedules).
+- Open from another computer: `http://<this-machine-ip>:3000`
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Tip: reserve device IPs in your router (static DHCP) so local control keeps working.
+Re-run `bin/rails tuya:rescan` if an IP changes.
