@@ -12,7 +12,7 @@ namespace :tuya do
       device.name ||= d["name"]
       device.local_key = d["key"]
       device.ip = d["ip"] if d["ip"].present?
-      device.protocol_version = (d["version"] || "3.3").to_s
+      device.protocol_version = (d["version"].presence || "3.3").to_s
       device.category ||= d["name"].to_s =~ /lamp|light|bulb|luz/i ? "light" : "plug"
       device.on_off = true if device.on_off.nil?
       device.save!
@@ -29,8 +29,10 @@ namespace :tuya do
     JSON.parse(stdout).each do |found|
       device = Device.find_by(tuya_device_id: found["device_id"])
       next unless device
-      device.update!(ip: found["ip"])
-      puts "Updated #{device.name} → #{found['ip']}"
+      device.ip = found["ip"] if found["ip"].present?
+      device.protocol_version = found["version"].to_s if found["version"].present?
+      device.save!
+      puts "Updated #{device.name} → #{device.ip} (v#{device.protocol_version})"
     end
   end
 end
