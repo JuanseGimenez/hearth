@@ -10,5 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 0) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_05_201713) do
+  create_table "devices", force: :cascade do |t|
+    t.boolean "brightness"
+    t.string "category"
+    t.boolean "color"
+    t.datetime "created_at", null: false
+    t.string "ip"
+    t.string "local_key"
+    t.string "name"
+    t.boolean "on_off"
+    t.string "protocol_version"
+    t.string "tuya_device_id"
+    t.datetime "updated_at", null: false
+  end
 end
