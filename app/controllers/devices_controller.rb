@@ -58,9 +58,10 @@ class DevicesController < ApplicationController
     client = TuyaClient.new(device)
     result =
       case action
+      when "turn_on"        then client.turn_on
+      when "turn_off"       then client.turn_off
       when "set_brightness" then client.set_brightness(params[:percent])
       when "set_color"      then client.set_color(r: params[:r], g: params[:g], b: params[:b])
-      else client.public_send(action)
       end
 
     flash[:alert] = result[:error] unless result[:ok]
