@@ -1,6 +1,7 @@
 <div class="auth">
   <div class="card">
-    <h1>🔶 Smart Home</h1>
+    <div class="logo"><%= render "shared/logo" %></div>
+    <h1>Hearth</h1>
     <p class="muted">Enter your password to continue</p>
     <%= form_with url: login_path, method: :post do |f| %>
       <%= f.password_field :password, placeholder: "Password", autofocus: true %>

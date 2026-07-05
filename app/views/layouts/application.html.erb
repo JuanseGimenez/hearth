@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Smart Home" %></title>
+    <title><%= content_for(:title) || "Hearth" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Smart Home">
+    <meta name="application-name" content="Hearth">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -26,7 +26,7 @@
   <body>
     <% if logged_in? %>
       <header class="topbar">
-        <%= link_to root_path, class: "brand" do %>🔶 Smart Home<% end %>
+        <%= link_to root_path, class: "brand" do %><%= render "shared/logo" %>Hearth<% end %>
         <nav>
           <%= link_to "Devices", root_path %>
           <%= link_to "Schedules", schedules_path %>
