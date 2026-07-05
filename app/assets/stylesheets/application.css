@@ -1,4 +1,4 @@
-/* Smart Home — modern minimalist design system (amber accent, auto light/dark) */
+/* Hearth — modern minimalist design system (amber accent, auto light/dark) */
 
 :root {
   color-scheme: light dark;
@@ -68,6 +68,9 @@ code {
   font-weight: 700; font-size: 1.05rem; color: var(--text);
 }
 .topbar .brand:hover { text-decoration: none; }
+.logo-mark { display: block; width: 1.5rem; height: 1.5rem; }
+.auth .logo { display: flex; justify-content: center; margin-bottom: .3rem; }
+.auth .logo .logo-mark { width: 3rem; height: 3rem; }
 .topbar nav { display: flex; align-items: center; gap: .2rem; }
 .topbar nav a, .topbar nav .button_to button {
   padding: .4rem .8rem; border-radius: 999px; border: 0; background: transparent;
