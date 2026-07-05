@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_05_201713) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_05_205637) do
   create_table "devices", force: :cascade do |t|
     t.boolean "brightness"
     t.string "category"
@@ -24,4 +24,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_201713) do
     t.string "tuya_device_id"
     t.datetime "updated_at", null: false
   end
+
+  create_table "schedules", force: :cascade do |t|
+    t.string "action"
+    t.datetime "created_at", null: false
+    t.string "days_of_week"
+    t.integer "device_id", null: false
+    t.boolean "enabled"
+    t.integer "hour"
+    t.integer "minute"
+    t.json "params"
+    t.datetime "updated_at", null: false
+    t.index ["device_id"], name: "index_schedules_on_device_id"
+  end
+
+  add_foreign_key "schedules", "devices"
 end
