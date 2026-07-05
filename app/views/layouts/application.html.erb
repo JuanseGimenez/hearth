@@ -19,11 +19,27 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <% if logged_in? %>
+      <header class="topbar">
+        <%= link_to root_path, class: "brand" do %>🔶 Smart Home<% end %>
+        <nav>
+          <%= link_to "Devices", root_path %>
+          <%= link_to "Schedules", schedules_path %>
+          <%= button_to "Log out", logout_path, method: :delete %>
+        </nav>
+      </header>
+    <% end %>
+
+    <main class="container">
+      <% flash.each do |type, message| %>
+        <div class="flash <%= type.to_s == "notice" ? "notice" : "alert" %>"><%= message %></div>
+      <% end %>
+      <%= yield %>
+    </main>
   </body>
 </html>
