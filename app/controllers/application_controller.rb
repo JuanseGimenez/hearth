@@ -4,4 +4,14 @@ class ApplicationController < ActionController::Base
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
+
+  before_action :require_login
+
+  private
+
+  def require_login
+    redirect_to login_path unless session[:authenticated]
+  end
+
+  def logged_in? = !!session[:authenticated]
 end
