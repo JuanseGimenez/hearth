@@ -1,0 +1,6 @@
+<h1>Smart Home</h1>
+<% if flash[:alert] %><p style="color:red"><%= flash[:alert] %></p><% end %>
+<%= form_with url: login_path, method: :post do |f| %>
+  <%= f.password_field :password, placeholder: "Password", autofocus: true %>
+  <%= f.submit "Enter" %>
+<% end %>
