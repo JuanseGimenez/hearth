@@ -30,7 +30,7 @@ class TuyaClientTest < ActiveSupport::TestCase
   test "set_color passes rgb params" do
     result = client.set_color(r: 10, g: 20, b: 30)
     params = result[:state]["echo"]["params"]
-    assert_equal([10, 20, 30], [params["r"], params["g"], params["b"]])
+    assert_equal([ 10, 20, 30 ], [ params["r"], params["g"], params["b"] ])
   end
 
   test "returns error hash when bridge is missing" do
