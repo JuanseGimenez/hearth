@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  device: one
+  action: MyString
+  params: 
+  hour: 1
+  minute: 1
+  days_of_week: MyString
+  enabled: false
+
+two:
+  device: two
+  action: MyString
+  params: 
+  hour: 1
+  minute: 1
+  days_of_week: MyString
+  enabled: false
