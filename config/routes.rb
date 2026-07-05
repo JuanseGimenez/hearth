@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     member do
       post :command
       post :detect_version
+      get :status
     end
   end
   resources :schedules, only: %i[index create update destroy]

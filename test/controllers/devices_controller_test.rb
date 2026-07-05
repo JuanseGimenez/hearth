@@ -70,4 +70,43 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_device_path(@device)
     assert flash[:alert].present?
   end
+
+  test "status reports on for a light powered on (dp 20)" do
+    fake = Minitest::Mock.new
+    fake.expect(:status, { ok: true, state: { "20" => true } })
+    TuyaClient.stub(:new, fake) do
+      get status_device_path(@device)
+    end
+    assert_response :success
+    assert_select ".status-on"
+  end
+
+  test "status reports off for a light powered off (dp 20)" do
+    fake = Minitest::Mock.new
+    fake.expect(:status, { ok: true, state: { "20" => false } })
+    TuyaClient.stub(:new, fake) do
+      get status_device_path(@device)
+    end
+    assert_select ".status-off"
+  end
+
+  test "status reports on for a plug on dp 1" do
+    plug = Device.create!(name: "Plug", tuya_device_id: "p1", ip: "1.2.3.5",
+      local_key: "k", protocol_version: "3.3", category: "plug", on_off: true)
+    fake = Minitest::Mock.new
+    fake.expect(:status, { ok: true, state: { "1" => true } })
+    TuyaClient.stub(:new, fake) do
+      get status_device_path(plug)
+    end
+    assert_select ".status-on"
+  end
+
+  test "status reports unreachable without an ip and does not call TuyaClient" do
+    @device.update!(ip: "")
+    TuyaClient.stub(:new, ->(*) { raise "TuyaClient should not be called without an ip" }) do
+      get status_device_path(@device)
+    end
+    assert_response :success
+    assert_select ".status-unreachable"
+  end
 end

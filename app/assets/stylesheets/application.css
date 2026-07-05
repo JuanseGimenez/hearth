@@ -97,7 +97,26 @@ code {
   transition: transform .12s ease, box-shadow .12s ease;
 }
 .device:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(16, 24, 40, .12); }
-.device .meta { color: var(--muted); font-size: .8rem; margin: .25rem 0 .95rem; }
+.device-head { display: flex; align-items: center; gap: .5rem; }
+.device-head h3 { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.device-icon { font-size: 1.2rem; line-height: 1; }
+.status-frame { margin-left: auto; }
+.device .meta { color: var(--muted); font-size: .8rem; margin: .4rem 0 .95rem; }
+
+/* ---- live status indicator ---- */
+.status { display: inline-flex; align-items: center; gap: .4rem; font-size: .78rem; font-weight: 600; }
+.status .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); flex: none; }
+.status-on { color: var(--ok); }
+.status-on .dot { background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
+.status-off { color: var(--muted); }
+.status-unreachable { color: var(--danger); }
+.status-unreachable .dot { background: var(--danger); }
+.status-unknown { color: var(--muted); }
+.status-loading { color: var(--muted); }
+.status-loading .dot { background: var(--accent); animation: status-pulse 1s ease-in-out infinite; }
+@keyframes status-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+.status-refresh { margin-left: .1rem; color: var(--muted); font-size: .85rem; text-decoration: none; }
+.status-refresh:hover { color: var(--accent-strong); text-decoration: none; }
 .device .controls { display: flex; flex-direction: column; gap: .7rem; }
 .onoff { display: inline-flex; gap: .4rem; }
 .control-form { display: flex; gap: .5rem; align-items: center; }
