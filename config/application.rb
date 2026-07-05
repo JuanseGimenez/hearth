@@ -21,7 +21,9 @@ module SmartHome
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    # Schedules store the local wall-clock time the user typed; run the app in
+    # the user's timezone so ScheduleRunnerJob fires at the right local minute.
+    config.time_zone = "America/Argentina/Buenos_Aires"
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
