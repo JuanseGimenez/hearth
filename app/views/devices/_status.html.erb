@@ -1,0 +1,7 @@
+<%= turbo_frame_tag dom_id(device, :status), class: "status-frame" do %>
+  <% state = device_power_state(device, result) %>
+  <span class="status status-<%= state %>">
+    <span class="dot"></span><%= device_power_label(state) %>
+  </span>
+  <%= link_to "↻", status_device_path(device), class: "status-refresh", title: "Refresh" %>
+<% end %>

@@ -1,0 +1,30 @@
+<%= form_with model: @schedule, url: schedules_path, class: "stack" do |f| %>
+  <div class="field"><%= f.label :device_id, "Device" %><%= f.collection_select :device_id, @devices, :id, :name %></div>
+  <div class="field"><%= f.label :action %><%= f.select :action, Schedule::ACTIONS %></div>
+
+  <div class="row">
+    <div class="field grow"><%= f.label :hour %><%= f.number_field :hour, in: 0..23, placeholder: "0-23" %></div>
+    <div class="field grow"><%= f.label :minute %><%= f.number_field :minute, in: 0..59, placeholder: "0-59" %></div>
+  </div>
+
+  <div class="field">
+    <label>Brightness % <span class="muted">(for set_brightness)</span></label>
+    <input type="number" name="schedule[params][percent]" min="0" max="100"
+           value="<%= (@schedule.params || {})["percent"] || 100 %>">
+  </div>
+
+  <div class="field">
+    <label>Color <span class="muted">(for set_color)</span></label>
+    <input type="color" id="sched_color" value="#ffffff"
+      onchange="document.getElementById('sched_r').value=parseInt(this.value.substr(1,2),16);document.getElementById('sched_g').value=parseInt(this.value.substr(3,2),16);document.getElementById('sched_b').value=parseInt(this.value.substr(5,2),16);">
+  </div>
+  <input type="hidden" name="schedule[params][r]" id="sched_r" value="<%= (@schedule.params || {})["r"] || 255 %>">
+  <input type="hidden" name="schedule[params][g]" id="sched_g" value="<%= (@schedule.params || {})["g"] || 255 %>">
+  <input type="hidden" name="schedule[params][b]" id="sched_b" value="<%= (@schedule.params || {})["b"] || 255 %>">
+
+  <div class="field"><%= f.label :days_of_week, "Days of week" %><%= f.text_field :days_of_week, placeholder: "e.g. 1,2,3,4,5 (blank = every day)" %></div>
+
+  <label class="inline-check"><%= f.check_box :enabled, checked: true %> Enabled</label>
+
+  <%= f.submit "Add schedule", class: "primary" %>
+<% end %>

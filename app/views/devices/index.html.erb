@@ -1,0 +1,9 @@
+<h1>Devices</h1>
+
+<% if @devices.empty? %>
+  <p class="muted">No devices yet. Run <code>bin/rails tuya:import</code> to add them.</p>
+<% else %>
+  <div class="grid">
+    <%= render @devices %>
+  </div>
+<% end %>
