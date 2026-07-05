@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   resources :devices, only: [:index] do
     member { post :command }
   end
+  resources :schedules, only: %i[index create update destroy]
   root "devices#index"
 end
