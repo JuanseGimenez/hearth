@@ -39,4 +39,21 @@ class TuyaClientTest < ActiveSupport::TestCase
     assert_not result[:ok]
     assert result[:error].present?
   end
+
+  test "default_python honors the TUYA_PYTHON override" do
+    original = ENV["TUYA_PYTHON"]
+    ENV["TUYA_PYTHON"] = "/custom/python"
+    assert_equal "/custom/python", TuyaClient.default_python
+  ensure
+    original.nil? ? ENV.delete("TUYA_PYTHON") : ENV["TUYA_PYTHON"] = original
+  end
+
+  test "default_python prefers the project venv, else falls back to python3" do
+    original = ENV["TUYA_PYTHON"]
+    ENV.delete("TUYA_PYTHON")
+    expected = File.executable?(TuyaClient::VENV_PYTHON) ? TuyaClient::VENV_PYTHON : "python3"
+    assert_equal expected, TuyaClient.default_python
+  ensure
+    original.nil? ? ENV.delete("TUYA_PYTHON") : ENV["TUYA_PYTHON"] = original
+  end
 end

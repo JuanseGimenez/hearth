@@ -4,8 +4,16 @@ require "open3"
 # Ruby wrapper over the Python tinytuya bridge. Consumers never see Python.
 class TuyaClient
   DEFAULT_BRIDGE = Rails.root.join("lib/tuya/bridge.py").to_s
+  VENV_PYTHON = Rails.root.join(".venv/bin/python").to_s
 
-  def initialize(device, python: "python3", bridge_path: DEFAULT_BRIDGE)
+  # Use the project virtualenv's Python (where tinytuya is installed) when it
+  # exists, so the server/jobs work without activating the venv. Falls back to
+  # the system python3, or an explicit override via the TUYA_PYTHON env var.
+  def self.default_python
+    ENV["TUYA_PYTHON"].presence || (File.executable?(VENV_PYTHON) ? VENV_PYTHON : "python3")
+  end
+
+  def initialize(device, python: TuyaClient.default_python, bridge_path: DEFAULT_BRIDGE)
     @device = device
     @python = python
     @bridge_path = bridge_path
