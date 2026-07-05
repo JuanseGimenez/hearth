@@ -1,0 +1,18 @@
+<h1>Schedules</h1>
+<%= link_to "← Devices", root_path %>
+<% if flash[:alert] %><p style="color:red"><%= flash[:alert] %></p><% end %>
+
+<ul>
+  <% @schedules.each do |s| %>
+    <li>
+      <%= s.device.name %> — <%= s.action %> at
+      <%= format("%02d:%02d", s.hour, s.minute) %>
+      <%= "(days: #{s.days_of_week})" if s.days_of_week.present? %>
+      <%= button_to (s.enabled ? "Disable" : "Enable"), schedule_path(s), method: :patch %>
+      <%= button_to "Delete", schedule_path(s), method: :delete %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>New schedule</h2>
+<%= render "form" %>
