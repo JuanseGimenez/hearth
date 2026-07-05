@@ -1,0 +1,27 @@
+<h1>Edit <%= @device.name %></h1>
+<%= link_to "← Devices", root_path %>
+
+<% if flash[:alert] %><p style="color:red"><%= flash[:alert] %></p><% end %>
+<% if @device.errors.any? %>
+  <ul style="color:red">
+    <% @device.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @device do |f| %>
+  <p><%= f.label :name %><br><%= f.text_field :name %></p>
+  <p><%= f.label :category %><br><%= f.select :category, Device::CATEGORIES %></p>
+  <p><%= f.label :ip, "IP" %><br><%= f.text_field :ip %></p>
+  <p><%= f.label :protocol_version, "Protocol version" %><br><%= f.text_field :protocol_version %></p>
+  <p>
+    <%= f.check_box :on_off %> <%= f.label :on_off, "On/Off" %>
+    <%= f.check_box :brightness %> <%= f.label :brightness %>
+    <%= f.check_box :color %> <%= f.label :color %>
+  </p>
+  <%= f.submit "Save" %>
+<% end %>
+
+<h2>Tools</h2>
+<%= button_to "Auto-detect protocol version", detect_version_device_path(@device) %>
+<%= button_to "Delete device", device_path(@device), method: :delete,
+      data: { turbo_confirm: "Delete #{@device.name}? This cannot be undone." } %>

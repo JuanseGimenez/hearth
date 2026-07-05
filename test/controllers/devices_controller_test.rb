@@ -24,4 +24,50 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
     assert fake.verify
     assert_response :redirect
   end
+
+  test "edit renders the form" do
+    get edit_device_path(@device)
+    assert_response :success
+  end
+
+  test "update changes device attributes and redirects" do
+    patch device_path(@device), params: {
+      device: { name: "Renamed", protocol_version: "3.5", category: "plug", brightness: false }
+    }
+    assert_redirected_to root_path
+    @device.reload
+    assert_equal "Renamed", @device.name
+    assert_equal "3.5", @device.protocol_version
+    assert_equal "plug", @device.category
+    assert_not @device.brightness
+  end
+
+  test "destroy removes the device" do
+    assert_difference -> { Device.count }, -1 do
+      delete device_path(@device)
+    end
+    assert_redirected_to root_path
+  end
+
+  test "detect_version finds and persists the first working protocol version" do
+    @device.update!(ip: "1.2.3.4", protocol_version: "3.3")
+    # 3.3 fails, 3.4 fails, 3.5 works — matches DevicesController::PROTOCOL_VERSIONS order
+    results = [ { ok: false, error: "x" }, { ok: false, error: "x" }, { ok: true, state: {} } ]
+    fake = Object.new
+    fake.define_singleton_method(:status) { results.shift }
+    TuyaClient.stub(:new, fake) do
+      post detect_version_device_path(@device)
+    end
+    assert_redirected_to edit_device_path(@device)
+    assert_equal "3.5", @device.reload.protocol_version
+  end
+
+  test "detect_version without an ip warns and does not call TuyaClient" do
+    @device.update!(ip: "")
+    TuyaClient.stub(:new, ->(*) { raise "TuyaClient should not be called without an ip" }) do
+      post detect_version_device_path(@device)
+    end
+    assert_redirected_to edit_device_path(@device)
+    assert flash[:alert].present?
+  end
 end

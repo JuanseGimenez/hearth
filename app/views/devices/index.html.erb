@@ -2,6 +2,7 @@
 <%= link_to "Schedules →", schedules_path %>
 <%= button_to "Log out", logout_path, method: :delete %>
 <% if flash[:alert] %><p style="color:red"><%= flash[:alert] %></p><% end %>
+<% if flash[:notice] %><p style="color:green"><%= flash[:notice] %></p><% end %>
 <div class="devices">
   <%= render @devices %>
 </div>
