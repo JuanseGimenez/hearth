@@ -44,6 +44,12 @@ class DevicesController < ApplicationController
     end
   end
 
+  def status
+    device = Device.find(params[:id])
+    result = device.ip.blank? ? { ok: false, error: "no ip" } : TuyaClient.new(device).status
+    render partial: "devices/status", locals: { device: device, result: result }
+  end
+
   def command
     device = Device.find(params[:id])
     action = params[:action_name].to_s

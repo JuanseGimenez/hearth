@@ -1,5 +1,11 @@
 <div class="device">
-  <h3><%= device.name %></h3>
+  <div class="device-head">
+    <span class="device-icon"><%= device_icon(device) %></span>
+    <h3><%= device.name %></h3>
+    <%= turbo_frame_tag dom_id(device, :status), src: status_device_path(device), loading: :lazy, class: "status-frame" do %>
+      <span class="status status-loading"><span class="dot"></span>…</span>
+    <% end %>
+  </div>
   <div class="meta">
     <%= device.category %><%= " · #{device.ip}" if device.ip.present? %><%= " · v#{device.protocol_version}" if device.protocol_version.present? %>
     · <%= link_to "Edit", edit_device_path(device) %>
