@@ -41,3 +41,9 @@
 
 # Python virtualenv for the tinytuya bridge
 /.venv/
+
+# Tuya wizard secrets (device local keys + API credentials) — never commit
+/devices.json
+/snapshot.json
+/tuyadevices.json
+/tinytuya.json
