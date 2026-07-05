@@ -7,13 +7,15 @@ Local web control for Smart Life / Tuya devices (on/off, brightness, color, sche
 1. Ruby deps: `bundle install`.
 2. Python deps in a project virtualenv (the app auto-detects `.venv/bin/python`):
    ```bash
-   python3 -m venv .venv
-   # On Debian/Ubuntu the venv ships without pip (no ensurepip). Bootstrap it
-   # with the system pip, then install requirements:
+   # On Debian/Ubuntu the venv ships without pip (no ensurepip module), which
+   # makes a plain `python3 -m venv .venv` print an error. Create it without pip
+   # and install requirements using the system pip targeted at the venv
+   # (note: --python goes BEFORE the `install` subcommand):
+   python3 -m venv --without-pip .venv
    python3 -m pip --python .venv/bin/python install -r requirements.txt
    ```
    (If your `python3 -m venv` already creates a working pip, just use
-   `.venv/bin/pip install -r requirements.txt` instead.)
+   `python3 -m venv .venv` then `.venv/bin/pip install -r requirements.txt`.)
 3. Extract device keys (needs a free account at iot.tuya.com linked to your Smart Life app):
    `.venv/bin/python -m tinytuya wizard`
    This writes `devices.json` with device ids and local keys.
