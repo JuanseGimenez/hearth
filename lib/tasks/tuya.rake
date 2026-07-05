@@ -5,7 +5,7 @@ namespace :tuya do
   desc "Import devices from a tinytuya wizard file (devices.json)"
   task import: :environment do
     path = ENV.fetch("DEVICES_FILE", "devices.json")
-    abort "Missing #{path}. Run `python3 -m tinytuya wizard` first." unless File.exist?(path)
+    abort "Missing #{path}. Run `.venv/bin/python -m tinytuya wizard` first." unless File.exist?(path)
 
     JSON.parse(File.read(path)).each do |d|
       device = Device.find_or_initialize_by(tuya_device_id: d["id"])
@@ -23,7 +23,7 @@ namespace :tuya do
   desc "Rescan the LAN and update device IPs by device id"
   task rescan: :environment do
     script = Rails.root.join("lib/tuya/discover.py").to_s
-    stdout, stderr, status = Open3.capture3("python3", script)
+    stdout, stderr, status = Open3.capture3(TuyaClient.default_python, script)
     abort "Scan failed: #{stderr}" unless status.success?
 
     JSON.parse(stdout).each do |found|

@@ -38,3 +38,6 @@
 
 # SDD scratch (ledger, briefs, reports)
 /.superpowers/
+
+# Python virtualenv for the tinytuya bridge
+/.venv/
