@@ -63,4 +63,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  # Pin to the 5.x series: Minitest::Mock (used in controller tests) was
+  # removed from minitest's default load in 6.x.
+  gem "minitest", "~> 5.25"
 end

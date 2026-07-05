@@ -1,0 +1,6 @@
+<h1>Devices</h1>
+<%= button_to "Log out", logout_path, method: :delete %>
+<% if flash[:alert] %><p style="color:red"><%= flash[:alert] %></p><% end %>
+<div class="devices">
+  <%= render @devices %>
+</div>
