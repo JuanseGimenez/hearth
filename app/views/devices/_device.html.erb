@@ -1,23 +1,31 @@
 <div class="device">
-  <h2><%= device.name %></h2>
-  <%= link_to "Edit", edit_device_path(device) %>
-  <%= button_to "On",  command_device_path(device), params: { action_name: "turn_on" } %>
-  <%= button_to "Off", command_device_path(device), params: { action_name: "turn_off" } %>
+  <h3><%= device.name %></h3>
+  <div class="meta">
+    <%= device.category %><%= " · #{device.ip}" if device.ip.present? %><%= " · v#{device.protocol_version}" if device.protocol_version.present? %>
+    · <%= link_to "Edit", edit_device_path(device) %>
+  </div>
 
-  <% if device.supports?(:brightness) %>
-    <%= form_with url: command_device_path(device), method: :post do |f| %>
-      <%= f.hidden_field :action_name, value: "set_brightness" %>
-      <%= f.range_field :percent, in: 0..100, value: 100 %>
-      <%= f.submit "Set brightness" %>
-    <% end %>
-  <% end %>
+  <div class="controls">
+    <div class="onoff">
+      <%= button_to "On",  command_device_path(device), params: { action_name: "turn_on" }, class: "primary" %>
+      <%= button_to "Off", command_device_path(device), params: { action_name: "turn_off" }, class: "ghost" %>
+    </div>
 
-  <% if device.supports?(:color) %>
-    <%= form_with url: command_device_path(device), method: :post do |f| %>
-      <%= f.hidden_field :action_name, value: "set_color" %>
-      <%= f.color_field :hex, value: "#ffffff", id: dom_id(device, :color) %>
-      <%= f.hidden_field :r %><%= f.hidden_field :g %><%= f.hidden_field :b %>
-      <%= f.submit "Set color", onclick: "var h=this.form.hex.value;this.form.r.value=parseInt(h.substr(1,2),16);this.form.g.value=parseInt(h.substr(3,2),16);this.form.b.value=parseInt(h.substr(5,2),16);" %>
+    <% if device.supports?(:brightness) %>
+      <%= form_with url: command_device_path(device), method: :post, class: "control-form" do |f| %>
+        <%= f.hidden_field :action_name, value: "set_brightness" %>
+        <%= f.range_field :percent, in: 0..100, value: 100 %>
+        <%= f.submit "Set", class: "primary" %>
+      <% end %>
     <% end %>
-  <% end %>
+
+    <% if device.supports?(:color) %>
+      <%= form_with url: command_device_path(device), method: :post, class: "control-form" do |f| %>
+        <%= f.hidden_field :action_name, value: "set_color" %>
+        <%= f.color_field :hex, value: "#ffffff", id: dom_id(device, :color) %>
+        <%= f.hidden_field :r %><%= f.hidden_field :g %><%= f.hidden_field :b %>
+        <%= f.submit "Set color", class: "primary", onclick: "var h=this.form.hex.value;this.form.r.value=parseInt(h.substr(1,2),16);this.form.g.value=parseInt(h.substr(3,2),16);this.form.b.value=parseInt(h.substr(5,2),16);" %>
+      <% end %>
+    <% end %>
+  </div>
 </div>
