@@ -1,6 +1,17 @@
 <%= form_with model: @schedule, url: schedules_path do |f| %>
   <%= f.collection_select :device_id, @devices, :id, :name %>
   <%= f.select :action, Schedule::ACTIONS %>
+  <label>Brightness %
+    <input type="number" name="schedule[params][percent]" min="0" max="100"
+           value="<%= (@schedule.params || {})["percent"] || 100 %>">
+  </label>
+  <label>Color
+    <input type="color" id="sched_color" value="#ffffff"
+      onchange="document.getElementById('sched_r').value=parseInt(this.value.substr(1,2),16);document.getElementById('sched_g').value=parseInt(this.value.substr(3,2),16);document.getElementById('sched_b').value=parseInt(this.value.substr(5,2),16);">
+  </label>
+  <input type="hidden" name="schedule[params][r]" id="sched_r" value="<%= (@schedule.params || {})["r"] || 255 %>">
+  <input type="hidden" name="schedule[params][g]" id="sched_g" value="<%= (@schedule.params || {})["g"] || 255 %>">
+  <input type="hidden" name="schedule[params][b]" id="sched_b" value="<%= (@schedule.params || {})["b"] || 255 %>">
   <%= f.number_field :hour, in: 0..23, placeholder: "hour" %>
   <%= f.number_field :minute, in: 0..59, placeholder: "min" %>
   <%= f.text_field :days_of_week, placeholder: "e.g. 1,2,3,4,5 (blank = every day)" %>
