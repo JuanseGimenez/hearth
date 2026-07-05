@@ -65,5 +65,5 @@ group :test do
   gem "selenium-webdriver"
   # Pin to the 5.x series: Minitest::Mock (used in controller tests) was
   # removed from minitest's default load in 6.x.
-  gem "minitest", "~> 5.25"
+  gem "minitest", "~> 6.0"
 end
