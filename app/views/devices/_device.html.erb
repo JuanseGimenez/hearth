@@ -2,7 +2,7 @@
   <div class="device-head">
     <span class="device-icon"><%= device_icon(device) %></span>
     <h3><%= device.name %></h3>
-    <%= turbo_frame_tag dom_id(device, :status), src: status_device_path(device), loading: :lazy, class: "status-frame" do %>
+    <%= turbo_frame_tag dom_id(device, :status), src: device_status_path(device), loading: :lazy, class: "status-frame" do %>
       <span class="status status-loading"><span class="dot"></span>…</span>
     <% end %>
   </div>
@@ -13,12 +13,12 @@
 
   <div class="controls">
     <div class="onoff">
-      <%= button_to "On",  command_device_path(device), params: { action_name: "turn_on" }, class: "primary" %>
-      <%= button_to "Off", command_device_path(device), params: { action_name: "turn_off" }, class: "ghost" %>
+      <%= button_to "On",  device_commands_path(device), params: { action_name: "turn_on" }, class: "primary" %>
+      <%= button_to "Off", device_commands_path(device), params: { action_name: "turn_off" }, class: "ghost" %>
     </div>
 
     <% if device.supports?(:brightness) %>
-      <%= form_with url: command_device_path(device), method: :post, class: "control-form" do |f| %>
+      <%= form_with url: device_commands_path(device), method: :post, class: "control-form" do |f| %>
         <%= f.hidden_field :action_name, value: "set_brightness" %>
         <%= f.range_field :percent, in: 0..100, value: 100 %>
         <%= f.submit "Set", class: "primary" %>
@@ -26,7 +26,7 @@
     <% end %>
 
     <% if device.supports?(:color) %>
-      <%= form_with url: command_device_path(device), method: :post, class: "control-form" do |f| %>
+      <%= form_with url: device_commands_path(device), method: :post, class: "control-form" do |f| %>
         <%= f.hidden_field :action_name, value: "set_color" %>
         <%= f.color_field :hex, value: "#ffffff", id: dom_id(device, :color) %>
         <%= f.hidden_field :r %><%= f.hidden_field :g %><%= f.hidden_field :b %>

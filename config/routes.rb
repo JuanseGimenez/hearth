@@ -14,10 +14,10 @@ Rails.application.routes.draw do
   post "login",  to: "sessions#create"
   delete "logout", to: "sessions#destroy"
   resources :devices, only: [ :index, :edit, :update, :destroy ] do
-    member do
-      post :command
-      post :detect_version
-      get :status
+    scope module: :devices do
+      resource  :status,            only: :show
+      resources :commands,          only: :create
+      resource  :version_detection, only: :create
     end
   end
   resources :schedules, only: %i[index create update destroy]

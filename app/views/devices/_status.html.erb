@@ -3,5 +3,5 @@
   <span class="status status-<%= state %>">
     <span class="dot"></span><%= device_power_label(state) %>
   </span>
-  <%= link_to "↻", status_device_path(device), class: "status-refresh", title: "Refresh" %>
+  <%= link_to "↻", device_status_path(device), class: "status-refresh", title: "Refresh" %>
 <% end %>

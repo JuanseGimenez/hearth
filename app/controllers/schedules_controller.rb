@@ -15,8 +15,7 @@ class SchedulesController < ApplicationController
   end
 
   def update
-    schedule = Schedule.find(params[:id])
-    schedule.update(enabled: !schedule.enabled)
+    Schedule.find(params[:id]).toggle_enabled!
     redirect_to schedules_path
   end
 
