@@ -1,5 +1,3 @@
-# Checks a submitted password against the configured SMART_HOME_PASSWORD using
-# a constant-time comparison. A blank configured password rejects everything.
 class PasswordAuthenticator
   def self.call(submitted) = new(submitted).call
 

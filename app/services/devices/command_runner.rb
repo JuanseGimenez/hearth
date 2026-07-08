@@ -1,6 +1,4 @@
 module Devices
-  # Dispatches a Tuya command for a device. Single source of truth for the set
-  # of allowed actions, shared by the web controller and the scheduler job.
   class CommandRunner
     ALLOWED = %w[turn_on turn_off set_brightness set_color].freeze
 

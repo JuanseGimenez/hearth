@@ -14,7 +14,7 @@ class Devices::VersionDetectorTest < ActiveSupport::TestCase
 
   test "detects and persists the first working protocol version" do
     d = device
-    results = [ { ok: false }, { ok: false }, { ok: true } ] # 3.3, 3.4 fail; 3.5 works
+    results = [ { ok: false }, { ok: false }, { ok: true } ]
     fake = Object.new
     fake.define_singleton_method(:status) { results.shift }
     result = TuyaClient.stub(:new, fake) { Devices::VersionDetector.new(d).call }

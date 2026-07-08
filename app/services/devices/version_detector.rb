@@ -1,6 +1,4 @@
 module Devices
-  # Probes each supported protocol version against the device and persists the
-  # first one that responds.
   class VersionDetector
     PROTOCOL_VERSIONS = %w[3.3 3.4 3.5].freeze
 

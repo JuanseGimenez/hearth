@@ -1,6 +1,4 @@
 module Devices
-  # Fetches the current device status, short-circuiting when there is no IP to
-  # reach.
   class StatusFetcher
     def initialize(device)
       @device = device
