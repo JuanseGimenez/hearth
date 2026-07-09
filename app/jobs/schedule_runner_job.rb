@@ -12,13 +12,6 @@ class ScheduleRunnerJob < ApplicationJob
   private
 
   def run(schedule)
-    client = TuyaClient.new(schedule.device)
-    params = (schedule.params || {}).symbolize_keys
-    case schedule.action
-    when "turn_on"        then client.turn_on
-    when "turn_off"       then client.turn_off
-    when "set_brightness" then client.set_brightness(params[:percent])
-    when "set_color"      then client.set_color(**params.slice(:r, :g, :b))
-    end
+    Devices::CommandRunner.new(schedule.device).call(schedule.action, schedule.params || {})
   end
 end

@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if authenticated?(params[:password])
+    if PasswordAuthenticator.call(params[:password])
       reset_session
       session[:authenticated] = true
       redirect_to root_path
@@ -19,14 +19,5 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     redirect_to login_path
-  end
-
-  private
-
-  def authenticated?(submitted)
-    expected = ENV["SMART_HOME_PASSWORD"].to_s
-    return false if expected.blank?
-
-    ActiveSupport::SecurityUtils.secure_compare(submitted.to_s, expected)
   end
 end

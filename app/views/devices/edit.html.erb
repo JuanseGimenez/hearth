@@ -27,7 +27,7 @@
 <div class="card">
   <h2>Tools</h2>
   <div class="row">
-    <%= button_to "Auto-detect protocol version", detect_version_device_path(@device) %>
+    <%= button_to "Auto-detect protocol version", device_version_detection_path(@device) %>
     <%= button_to "Delete device", device_path(@device), method: :delete, class: "danger",
           data: { turbo_confirm: "Delete #{@device.name}? This cannot be undone." } %>
   </div>

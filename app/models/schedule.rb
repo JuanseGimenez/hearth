@@ -16,4 +16,8 @@ class Schedule < ApplicationRecord
     return true if days_of_week.blank?
     days_of_week.split(",").map(&:strip).map(&:to_i).include?(wday)
   end
+
+  def toggle_enabled!
+    update(enabled: !enabled)
+  end
 end
