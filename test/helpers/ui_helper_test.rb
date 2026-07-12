@@ -24,9 +24,17 @@ class UiHelperTest < ActionView::TestCase
     assert_equal btn(:ghost), btn
   end
 
+  test "btn primary has amber focus-visible ring" do
+    assert_includes btn(:primary), "focus-visible:ring-amber-500/40"
+  end
+
   test "input_class is full width bordered field" do
     assert_includes input_class, "w-full"
     assert_includes input_class, "rounded-lg"
+  end
+
+  test "input_class has amber focus-visible ring" do
+    assert_includes input_class, "focus-visible:ring-amber-500/40"
   end
 
   test "label_class is uppercase muted" do
@@ -45,6 +53,10 @@ class UiHelperTest < ActionView::TestCase
 
   test "color_input_class is a small swatch" do
     assert_includes color_input_class, "w-12"
+  end
+
+  test "color_input_class has amber focus-visible ring" do
+    assert_includes color_input_class, "focus-visible:ring-amber-500/40"
   end
 
   test "badge_class on is green" do

@@ -1,5 +1,6 @@
 module UiHelper
-  BTN_BASE = "font-semibold rounded-lg border transition cursor-pointer".freeze
+  BTN_BASE = "font-semibold rounded-lg border transition cursor-pointer " \
+             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 focus-visible:border-amber-500".freeze
 
   BTN_SIZES = {
     normal: "text-sm px-3.5 py-2",
@@ -17,7 +18,8 @@ module UiHelper
   end
 
   def input_class
-    "w-full px-2.5 py-2 border border-slate-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100"
+    "w-full px-2.5 py-2 border border-slate-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 " \
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 focus-visible:border-amber-500"
   end
 
   def label_class
@@ -33,7 +35,8 @@ module UiHelper
   end
 
   def color_input_class
-    "w-12 h-9 p-0.5 cursor-pointer border border-slate-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800"
+    "w-12 h-9 p-0.5 cursor-pointer border border-slate-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 " \
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 focus-visible:border-amber-500"
   end
 
   def badge_class(on: false)
