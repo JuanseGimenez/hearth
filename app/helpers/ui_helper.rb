@@ -10,7 +10,7 @@ module UiHelper
   BTN_VARIANTS = {
     primary: "bg-amber-500 hover:bg-amber-600 border-amber-500 hover:border-amber-600 text-amber-950",
     ghost: "bg-transparent border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 hover:border-amber-500",
-    danger: "bg-transparent text-red-600 border-red-600/30 hover:bg-red-500/10 hover:border-red-600"
+    danger: "bg-transparent text-red-600 border-red-600/30 hover:bg-red-600/10 hover:border-red-600"
   }.freeze
 
   def btn(variant = :ghost, size: :normal)
@@ -23,7 +23,7 @@ module UiHelper
   end
 
   def label_class
-    "text-xs font-semibold uppercase tracking-wide text-slate-500"
+    "text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400"
   end
 
   def card_class
@@ -41,7 +41,7 @@ module UiHelper
 
   def badge_class(on: false)
     base = "text-xs px-2 py-0.5 rounded-full font-semibold"
-    tone = on ? "bg-green-500/15 text-green-600" : "bg-slate-100 dark:bg-zinc-800 text-slate-500"
+    tone = on ? "bg-green-600/15 text-green-600" : "bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-slate-400"
     "#{base} #{tone}"
   end
 end

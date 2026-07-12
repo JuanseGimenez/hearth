@@ -40,6 +40,7 @@ class UiHelperTest < ActionView::TestCase
   test "label_class is uppercase muted" do
     assert_includes label_class, "uppercase"
     assert_includes label_class, "text-slate-500"
+    assert_includes label_class, "dark:text-slate-400"
   end
 
   test "card_class has surface, border and radius" do
