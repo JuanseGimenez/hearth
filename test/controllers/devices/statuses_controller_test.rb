@@ -16,7 +16,7 @@ class Devices::StatusesControllerTest < ActionDispatch::IntegrationTest
       get device_status_path(@device)
     end
     assert_response :success
-    assert_select ".status-on"
+    assert_select "[data-state='on']"
   end
 
   test "show reports off for a light powered off (dp 20)" do
@@ -25,7 +25,7 @@ class Devices::StatusesControllerTest < ActionDispatch::IntegrationTest
     TuyaClient.stub(:new, fake) do
       get device_status_path(@device)
     end
-    assert_select ".status-off"
+    assert_select "[data-state='off']"
   end
 
   test "show reports on for a plug on dp 1" do
@@ -36,7 +36,7 @@ class Devices::StatusesControllerTest < ActionDispatch::IntegrationTest
     TuyaClient.stub(:new, fake) do
       get device_status_path(plug)
     end
-    assert_select ".status-on"
+    assert_select "[data-state='on']"
   end
 
   test "show reports unreachable without an ip and does not call TuyaClient" do
@@ -45,6 +45,6 @@ class Devices::StatusesControllerTest < ActionDispatch::IntegrationTest
       get device_status_path(@device)
     end
     assert_response :success
-    assert_select ".status-unreachable"
+    assert_select "[data-state='unreachable']"
   end
 end
