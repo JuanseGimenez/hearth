@@ -1,24 +1,24 @@
-<h1>Schedules</h1>
+<h1 class="text-2xl font-semibold tracking-tight mb-5">Schedules</h1>
 
 <% if @schedules.empty? %>
-  <p class="muted">No schedules yet. Add one below.</p>
+  <p class="text-slate-500 dark:text-slate-400">No schedules yet. Add one below.</p>
 <% else %>
-  <ul class="list">
+  <ul class="list-none p-0 m-0 mb-6 flex flex-col gap-2">
     <% @schedules.each do |s| %>
-      <li>
-        <span class="when"><%= format("%02d:%02d", s.hour, s.minute) %></span>
+      <li class="flex items-center gap-2.5 flex-wrap bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-3.5 py-2.5">
+        <span class="tabular-nums font-bold text-[1.05rem]"><%= format("%02d:%02d", s.hour, s.minute) %></span>
         <span><strong><%= s.device.name %></strong> · <%= s.action %></span>
-        <% if s.days_of_week.present? %><span class="badge">days: <%= s.days_of_week %></span><% end %>
-        <span class="badge <%= "on" if s.enabled %>"><%= s.enabled ? "enabled" : "disabled" %></span>
-        <span class="spacer"></span>
-        <%= button_to (s.enabled ? "Disable" : "Enable"), schedule_path(s), method: :patch, class: "ghost small" %>
-        <%= button_to "Delete", schedule_path(s), method: :delete, class: "danger small" %>
+        <% if s.days_of_week.present? %><span class="<%= badge_class %>">days: <%= s.days_of_week %></span><% end %>
+        <span class="<%= badge_class(on: s.enabled) %>"><%= s.enabled ? "enabled" : "disabled" %></span>
+        <span class="flex-1"></span>
+        <%= button_to (s.enabled ? "Disable" : "Enable"), schedule_path(s), method: :patch, class: btn(:ghost, size: :small) %>
+        <%= button_to "Delete", schedule_path(s), method: :delete, class: btn(:danger, size: :small) %>
       </li>
     <% end %>
   </ul>
 <% end %>
 
-<div class="card">
-  <h2>New schedule</h2>
+<div class="<%= card_class %>">
+  <h2 class="text-[1.05rem] font-semibold mb-3">New schedule</h2>
   <%= render "form" %>
 </div>
