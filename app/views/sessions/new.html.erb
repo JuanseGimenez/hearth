@@ -1,11 +1,11 @@
-<div class="auth">
-  <div class="card">
-    <div class="logo"><%= render "shared/logo" %></div>
-    <h1>Hearth</h1>
-    <p class="muted">Enter your password to continue</p>
-    <%= form_with url: login_path, method: :post do |f| %>
-      <%= f.password_field :password, placeholder: "Password", autofocus: true %>
-      <%= f.submit "Enter", class: "primary" %>
+<div class="min-h-[72vh] grid place-items-center">
+  <div class="<%= card_class %> w-[min(360px,92vw)] text-center">
+    <div class="flex justify-center mb-1 [&_svg]:w-12 [&_svg]:h-12"><%= render "shared/logo" %></div>
+    <h1 class="text-2xl font-semibold tracking-tight mb-1">Hearth</h1>
+    <p class="text-slate-500 dark:text-slate-400">Enter your password to continue</p>
+    <%= form_with url: login_path, method: :post, class: "flex flex-col gap-3 mt-4" do |f| %>
+      <%= f.password_field :password, placeholder: "Password", autofocus: true, class: input_class %>
+      <%= f.submit "Enter", class: btn(:primary) %>
     <% end %>
   </div>
 </div>

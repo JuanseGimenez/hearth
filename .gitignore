@@ -48,3 +48,6 @@
 /tuyadevices.json
 /tinytuya.json
 /tuya-raw.json
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

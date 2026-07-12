@@ -1,34 +1,34 @@
-<h1>Edit <%= @device.name %></h1>
+<h1 class="text-2xl font-semibold tracking-tight mb-5">Edit <%= @device.name %></h1>
 
 <% if @device.errors.any? %>
-  <div class="flash alert">
-    <ul><% @device.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
+  <div class="rounded-lg px-4 py-3 mb-4 border font-medium text-red-600 bg-red-600/10 border-red-600/30">
+    <ul class="m-0 pl-4 list-disc"><% @device.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
   </div>
 <% end %>
 
-<div class="card">
-  <%= form_with model: @device, class: "stack" do |f| %>
-    <div class="field"><%= f.label :name %><%= f.text_field :name %></div>
-    <div class="field"><%= f.label :category %><%= f.select :category, Device::CATEGORIES %></div>
-    <div class="field"><%= f.label :ip, "IP" %><%= f.text_field :ip %></div>
-    <div class="field"><%= f.label :protocol_version, "Protocol version" %><%= f.text_field :protocol_version %></div>
-    <div class="field">
-      <label>Capabilities</label>
-      <div class="checks">
-        <label><%= f.check_box :on_off %> On/Off</label>
-        <label><%= f.check_box :brightness %> Brightness</label>
-        <label><%= f.check_box :color %> Color</label>
+<div class="<%= card_class %>">
+  <%= form_with model: @device, class: "flex flex-col gap-4" do |f| %>
+    <div class="flex flex-col gap-1.5"><%= f.label :name, class: label_class %><%= f.text_field :name, class: input_class %></div>
+    <div class="flex flex-col gap-1.5"><%= f.label :category, class: label_class %><%= f.select :category, Device::CATEGORIES, {}, class: input_class %></div>
+    <div class="flex flex-col gap-1.5"><%= f.label :ip, "IP", class: label_class %><%= f.text_field :ip, class: input_class %></div>
+    <div class="flex flex-col gap-1.5"><%= f.label :protocol_version, "Protocol version", class: label_class %><%= f.text_field :protocol_version, class: input_class %></div>
+    <div class="flex flex-col gap-1.5">
+      <label class="<%= label_class %>">Capabilities</label>
+      <div class="flex gap-5 flex-wrap">
+        <label class="flex items-center gap-1.5 font-medium"><%= f.check_box :on_off, class: checkbox_class %> On/Off</label>
+        <label class="flex items-center gap-1.5 font-medium"><%= f.check_box :brightness, class: checkbox_class %> Brightness</label>
+        <label class="flex items-center gap-1.5 font-medium"><%= f.check_box :color, class: checkbox_class %> Color</label>
       </div>
     </div>
-    <%= f.submit "Save", class: "primary" %>
+    <%= f.submit "Save", class: "#{btn(:primary)} self-start" %>
   <% end %>
 </div>
 
-<div class="card">
-  <h2>Tools</h2>
-  <div class="row">
-    <%= button_to "Auto-detect protocol version", device_version_detection_path(@device) %>
-    <%= button_to "Delete device", device_path(@device), method: :delete, class: "danger",
+<div class="<%= card_class %> mt-4">
+  <h2 class="text-[1.05rem] font-semibold mb-3">Tools</h2>
+  <div class="flex gap-2.5 flex-wrap items-end">
+    <%= button_to "Auto-detect protocol version", device_version_detection_path(@device), class: btn(:ghost) %>
+    <%= button_to "Delete device", device_path(@device), method: :delete, class: btn(:danger),
           data: { turbo_confirm: "Delete #{@device.name}? This cannot be undone." } %>
   </div>
 </div>

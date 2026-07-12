@@ -18,26 +18,26 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-slate-100 dark:bg-zinc-950 text-slate-900 dark:text-zinc-100 antialiased min-h-screen">
     <% if logged_in? %>
-      <header class="topbar">
-        <%= link_to root_path, class: "brand" do %><%= render "shared/logo" %>Hearth<% end %>
-        <nav>
-          <%= link_to "Devices", root_path %>
-          <%= link_to "Schedules", schedules_path %>
-          <%= button_to "Log out", logout_path, method: :delete %>
+      <% pill = "px-3 py-1.5 rounded-full text-sm font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-slate-900 dark:hover:text-zinc-100 no-underline" %>
+      <header class="sticky top-0 z-10 flex items-center justify-between gap-4 px-5 py-3 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-slate-200 dark:border-zinc-700">
+        <%= link_to root_path, class: "flex items-center gap-2 font-bold text-[1.05rem] text-slate-900 dark:text-zinc-100 no-underline hover:no-underline" do %><%= render "shared/logo" %>Hearth<% end %>
+        <nav class="flex items-center gap-1">
+          <%= link_to "Devices", root_path, class: pill %>
+          <%= link_to "Schedules", schedules_path, class: pill %>
+          <%= button_to "Log out", logout_path, method: :delete, class: "#{pill} border-0 bg-transparent cursor-pointer" %>
         </nav>
       </header>
     <% end %>
 
-    <main class="container">
+    <main class="max-w-4xl mx-auto px-5 pt-7 pb-16">
       <% flash.each do |type, message| %>
-        <div class="flash <%= type.to_s == "notice" ? "notice" : "alert" %>"><%= message %></div>
+        <div class="rounded-lg px-4 py-3 mb-4 border font-medium <%= type.to_s == "notice" ? "text-green-600 bg-green-600/10 border-green-600/30" : "text-red-600 bg-red-600/10 border-red-600/30" %>"><%= message %></div>
       <% end %>
       <%= yield %>
     </main>

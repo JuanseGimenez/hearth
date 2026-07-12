@@ -1,9 +1,9 @@
-<h1>Devices</h1>
+<h1 class="text-2xl font-semibold tracking-tight mb-5">Devices</h1>
 
 <% if @devices.empty? %>
-  <p class="muted">No devices yet. Run <code>bin/rails tuya:import</code> to add them.</p>
+  <p class="text-slate-500 dark:text-slate-400">No devices yet. Run <code class="bg-slate-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-[.85em]">bin/rails tuya:import</code> to add them.</p>
 <% else %>
-  <div class="grid">
+  <div class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(230px,1fr))]">
     <%= render @devices %>
   </div>
 <% end %>

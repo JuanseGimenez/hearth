@@ -1,30 +1,32 @@
-<%= form_with model: @schedule, url: schedules_path, class: "stack" do |f| %>
-  <div class="field"><%= f.label :device_id, "Device" %><%= f.collection_select :device_id, @devices, :id, :name %></div>
-  <div class="field"><%= f.label :action %><%= f.select :action, Schedule::ACTIONS %></div>
+<%= form_with model: @schedule, url: schedules_path, class: "flex flex-col gap-4" do |f| %>
+  <div class="flex flex-col gap-1.5"><%= f.label :device_id, "Device", class: label_class %><%= f.collection_select :device_id, @devices, :id, :name, {}, class: input_class %></div>
+  <div class="flex flex-col gap-1.5"><%= f.label :action, class: label_class %><%= f.select :action, Schedule::ACTIONS, {}, class: input_class %></div>
 
-  <div class="row">
-    <div class="field grow"><%= f.label :hour %><%= f.number_field :hour, in: 0..23, placeholder: "0-23" %></div>
-    <div class="field grow"><%= f.label :minute %><%= f.number_field :minute, in: 0..59, placeholder: "0-59" %></div>
+  <div class="flex gap-2.5 flex-wrap items-end">
+    <div class="flex flex-col gap-1.5 flex-1"><%= f.label :hour, class: label_class %><%= f.number_field :hour, in: 0..23, placeholder: "0-23", class: input_class %></div>
+    <div class="flex flex-col gap-1.5 flex-1"><%= f.label :minute, class: label_class %><%= f.number_field :minute, in: 0..59, placeholder: "0-59", class: input_class %></div>
   </div>
 
-  <div class="field">
-    <label>Brightness % <span class="muted">(for set_brightness)</span></label>
+  <div class="flex flex-col gap-1.5">
+    <label class="<%= label_class %>">Brightness % <span class="text-slate-500 dark:text-slate-400 normal-case">(for set_brightness)</span></label>
     <input type="number" name="schedule[params][percent]" min="0" max="100"
-           value="<%= (@schedule.params || {})["percent"] || 100 %>">
+           value="<%= (@schedule.params || {})["percent"] || 100 %>"
+           class="<%= input_class %>">
   </div>
 
-  <div class="field">
-    <label>Color <span class="muted">(for set_color)</span></label>
+  <div class="flex flex-col gap-1.5">
+    <label class="<%= label_class %>">Color <span class="text-slate-500 dark:text-slate-400 normal-case">(for set_color)</span></label>
     <input type="color" id="sched_color" value="#ffffff"
+      class="<%= color_input_class %>"
       onchange="document.getElementById('sched_r').value=parseInt(this.value.substr(1,2),16);document.getElementById('sched_g').value=parseInt(this.value.substr(3,2),16);document.getElementById('sched_b').value=parseInt(this.value.substr(5,2),16);">
   </div>
   <input type="hidden" name="schedule[params][r]" id="sched_r" value="<%= (@schedule.params || {})["r"] || 255 %>">
   <input type="hidden" name="schedule[params][g]" id="sched_g" value="<%= (@schedule.params || {})["g"] || 255 %>">
   <input type="hidden" name="schedule[params][b]" id="sched_b" value="<%= (@schedule.params || {})["b"] || 255 %>">
 
-  <div class="field"><%= f.label :days_of_week, "Days of week" %><%= f.text_field :days_of_week, placeholder: "e.g. 1,2,3,4,5 (blank = every day)" %></div>
+  <div class="flex flex-col gap-1.5"><%= f.label :days_of_week, "Days of week", class: label_class %><%= f.text_field :days_of_week, placeholder: "e.g. 1,2,3,4,5 (blank = every day)", class: input_class %></div>
 
-  <label class="inline-check"><%= f.check_box :enabled, checked: true %> Enabled</label>
+  <label class="flex items-center gap-1.5 font-medium"><%= f.check_box :enabled, checked: true, class: checkbox_class %> Enabled</label>
 
-  <%= f.submit "Add schedule", class: "primary" %>
+  <%= f.submit "Add schedule", class: "#{btn(:primary)} self-start" %>
 <% end %>
